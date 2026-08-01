@@ -28,39 +28,52 @@ class User(db.Model, UserMixin):
             "id" : self.id,
             'username' : self.username,
             "email" : self.email, 
-            'role' : self.roles
+            'role' : [sult.to_dict() for sult in self.roles]
         }
 
-    def add_role_by_name(self, role):
-        existing_role = Role.query.filter_by(role = role).first()
+    def add_role_by_name(self, role:str):
+        print("In the String section")
+        existing_role = Role.query.filter_by(name = role).first()
         if existing_role and existing_role not in self.roles:
             self.roles.append(existing_role)
             print("Checking ....")
             return True
-        print("The User already exists")
+        print("The User already has this role", role)
         return False
 
+    def add_role_by_name(self, role:list):
+        print("In the list section")
+        for rol in role:
+            existing_role = Role.query.filter_by(name = rol).first()
+            if existing_role:
+                print("Checked if the role exists")
+                if existing_role not in self.roles:
+                    self.roles.append(existing_role)
+                    print("Checking ....")
+        return True
+        # print("The User already has this role", role)
+        # return False
+
     def remove_role_by_name(self, role):
-        existing_role = Role.query.filter_by(role = role).first()
+        existing_role = Role.query.filter_by(name = role).first()
         if existing_role and existing_role in self.role:
             self.roles.remove(existing_role)
             return True
         return False
 
-    # @classmethod
-    def add_user(cls, username, email, password, role):
+    @classmethod
+    def add_user(cls, username, email, password, role, fs_uniquifier):
         if not cls.if_exists(username, email):
-            new_user = cls(username = username, email = email, password = password)
+            new_user = cls(username = username, email = email, password = password, fs_uniquifier =fs_uniquifier)
             db.session.add(new_user)
             new_user.add_role_by_name(role)
             db.session.commit()
-            print("This is the new user")
-            print(new_user)
-            return {"Message": "Successfully added a new user"}
-        return {"Error": "User creation"}
+            return {"Message": "Successfully added a new user", "User": new_user.to_dict()}
+        print("The user already exists")
+        return {"Error": "User already exists"}
 
     def if_exists(username, email):
-        existing_user = User.query.filter_by(username = username, email = email)
+        existing_user = User.query.filter_by(username = username, email = email).first()
         if existing_user:
             return True
         return False

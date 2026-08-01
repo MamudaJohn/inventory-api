@@ -88,7 +88,7 @@ inventory-api/
         middleware/
         utils/
         errors/
-    migrtaions/
+    migrations/
     test/
     docs/
     instance/

@@ -48,17 +48,6 @@ app.register_blueprint(rolesBlueprint)
 
 @app.route("/")
 def Welcome():
-    user = User(
-        username = "John Mamuda",
-        email = "mamuda@gmail.com",
-        password = "123456789",
-        fs_uniquifier=str(uuid.uuid4().hex)
-    )
-    user.add_role_by_name("Super Admin")
-    db.session.add(user)
-    db.session.commit()
-
-
     result = User.query.all()
     result = [sult.to_dict() for sult in result]
     # print(result)

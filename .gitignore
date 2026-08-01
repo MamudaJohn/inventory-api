@@ -7,3 +7,4 @@ __pycache__
 migrations/
 migrations
 instance
+personal_note
