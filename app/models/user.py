@@ -22,6 +22,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(256), nullable=False)
     roles = db.relationship('Role', secondary=user_role, backref=db.backref('users', lazy='dynamic'), lazy='selectin' )
     fs_uniquifier = db.Column(db.String(64), unique=True, nullable=False)
+    active = db.Column(db.Boolean, nullable=False, default=True)
     
     def to_dict(self):
         return {
