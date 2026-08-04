@@ -11,8 +11,10 @@ def create_app(config_class=Config):
     with app.app_context():
         from app import models
         from app.blueprints.auth import auth_bp
+        from app.blueprints.inventory import inventory_bp
 
         app.register_blueprint(auth_bp)
+        app.register_blueprint(inventory_bp)
     migrate.init_app(app, db)
     bcrypt.init_app(app)
     jwt.init_app(app)

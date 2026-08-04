@@ -1,5 +1,5 @@
 from app.extensions import db, bcrypt
-from datetime import datetime
+from datetime import datetime, timezone
 
 class User(db.Model):
     __tablename__ = "users"
@@ -10,7 +10,7 @@ class User(db.Model):
     full_name = db.Column(db.String(150), nullable=False)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=False)
     is_active = db.Column(db.Boolean, default=True, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    created_at = db.Column(db.DateTime, default=lambda : datetime.now(timezone.utc), nullable=False)
 
     role = db.relationship("Role", back_populates="users")
     # back_populate always points back to the column name and not the table name

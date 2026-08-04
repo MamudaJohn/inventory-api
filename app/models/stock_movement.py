@@ -1,5 +1,5 @@
 from app.extensions import db
-from datetime import datetime
+from datetime import datetime, timezone
 
 class StockMovement(db.Model):
     __tablename__ = "stock_movements"
@@ -16,7 +16,7 @@ class StockMovement(db.Model):
 
     performed_by = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     notes =db.Column(db.Text, nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow() , nullable=False)
+    created_at = db.Column(db.DateTime, default=lambda : datetime.now(timezone.utc) , nullable=False)
 
     product = db.relationship("Product", backref="stock_movements")
     warehouse = db.relationship("Warehouse", backref="stock_movements")

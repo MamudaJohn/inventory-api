@@ -1,0 +1,1 @@
+from app.blueprints.inventory.routes import inventory_bp
