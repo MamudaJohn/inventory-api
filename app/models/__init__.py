@@ -5,5 +5,8 @@ from .category import Category
 from .supplier import Supplier
 from .warehouse import Warehouse
 from .product import Product
-from.stock_movement import StockMovement
+from .stock_movement import StockMovement
 from .stock_level import StockLevel
+from .purchase_order import PurchaseOrder
+from .purchase_order_item import PurchaseOrderItem
+
