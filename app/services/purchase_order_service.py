@@ -23,6 +23,8 @@ def receive_purchase_order(purchase_order_id, performed_by):
             f"Cannot receive a purchase order with status '{po.status}' — must be 'ordered'"
         )
 
+        Admin123456!
+
     for item in po.items:
         record_stock_movement(
             product_id=item.product_id,
